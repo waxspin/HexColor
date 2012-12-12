@@ -6,8 +6,8 @@ int WHITE_PIN_2 = 11;
 
 int oldMillis = 0;
 int nowMillis = 0;
-int WAIT_TIME_IN_MILLIS = 250;
-int FADE_INCREMENT = 15;
+int WAIT_TIME_IN_MILLIS = 42;
+int FADE_INCREMENT = 5.333;
 int curBrightness = 255;
 
 
@@ -48,7 +48,7 @@ void loop() {
   analogWrite(WHITE_PIN_1, curBrightness);
   analogWrite(WHITE_PIN_2, curBrightness);
   
-  //Serial.println(FADE_INCREMENT);
+  Serial.println(curBrightness);
   
   oldMillis = nowMillis;
   }
