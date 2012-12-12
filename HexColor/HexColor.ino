@@ -6,6 +6,10 @@ int WHITE_PIN_2 = 11;
 
 int oldMillis = 0;
 int nowMillis = 0;
+int WAIT_TIME_IN_MILLIS = 250;
+int FADE_INCREMENT = 15;
+int curBrightness = 255;
+
 
 
 void setup() {
@@ -15,11 +19,12 @@ void setup() {
   pinMode(WHITE_PIN_1, OUTPUT);
   pinMode(WHITE_PIN_2, OUTPUT);
   
-  analogWrite(RED_PIN, 255);
-  analogWrite(GREEN_PIN, 255);
-  analogWrite(BLUE_PIN, 255);
-  analogWrite(WHITE_PIN_1, 255);
-  analogWrite(WHITE_PIN_2, 255);
+  //Init the pins to the initial curBrightness value.
+  analogWrite(RED_PIN, curBrightness);
+  analogWrite(GREEN_PIN, curBrightness);
+  analogWrite(BLUE_PIN, curBrightness);
+  analogWrite(WHITE_PIN_1, curBrightness);
+  analogWrite(WHITE_PIN_2, curBrightness);
   
   
   Serial.begin(9600);
@@ -28,5 +33,25 @@ void setup() {
 }
 
 void loop() {
+  nowMillis = millis();
+  
+  if (nowMillis - oldMillis > WAIT_TIME_IN_MILLIS) {
+    curBrightness -= FADE_INCREMENT;
+    
+    if (curBrightness > 255 || curBrightness < 0) {
+      FADE_INCREMENT *= -1;
+    }
+  
+  analogWrite(RED_PIN, curBrightness);
+  analogWrite(GREEN_PIN, curBrightness);
+  analogWrite(BLUE_PIN, curBrightness);
+  analogWrite(WHITE_PIN_1, curBrightness);
+  analogWrite(WHITE_PIN_2, curBrightness);
+  
+  //Serial.println(FADE_INCREMENT);
+  
+  oldMillis = nowMillis;
+  }
+  
   
 }
